@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import schema from './graphql';
 
 let app = express();
-
+//Defining the GraphQL route.  This will process the HTTP request through GraphQL and return the JSON response
 app.use('./graphql', graphqlHTTP((res) => ({
   schema,
   pretty: true,
