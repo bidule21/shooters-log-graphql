@@ -1,7 +1,7 @@
 'use strict';
 import mongoose from 'mongoose';
 
-const matchSchema = module.exports = mongoose.Schema({
+const matchSchema = mongoose.Schema({
   // userId:           {type: mongoose.Schema.ObjectId, required: true},
   competitionId:    {type: mongoose.Schema.ObjectId, required: true},
   matchNumber:      {type: Number, required: true},
