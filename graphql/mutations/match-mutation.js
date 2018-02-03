@@ -37,7 +37,19 @@ const matchMutations = {
       console.log('entered resolve for createMatch');
       return new Promise((resolve, reject) => {
         console.log('values of args in createMatch: ', args);
-        matchModel.create({competitionId: args.competitionId, matchNumber: args.matchNumber, targetNumber: args.targetNumber, distanceToTarget: args.distanceToTarget, relay: args.distanceToTarget, startTime: args.startTime, temperature: args.temperature, windClockDirection: args.windClockDirection, windSpeed: args.windSpeed, lightClockDirection: args.lightClockDirection, weather: args.weather})
+        matchModel.create({
+          competitionId: args.competitionId, 
+          matchNumber: args.matchNumber, 
+          targetNumber: args.targetNumber, 
+          distanceToTarget: args.distanceToTarget, 
+          relay: args.distanceToTarget, 
+          startTime: args.startTime, 
+          temperature: args.temperature, 
+          windClockDirection: args.windClockDirection, 
+          windSpeed: args.windSpeed, 
+          lightClockDirection: args.lightClockDirection, 
+          weather: args.weather
+        })
         .then(resolve)
         .catch(err => reject(httpErrors(404, err.message)));
       })

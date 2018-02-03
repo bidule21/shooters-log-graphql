@@ -1,9 +1,7 @@
-'use strict';
-
-const {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean, GraphQLInt} = require('graphql');
+import {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean, GraphQLInt, GraphQLFloat, GraphQLNonNull} from 'graphql';
 
 export default new GraphQLObjectType({
-  name: 'shot',
+  name: 'ShotType',
   fields: {
     _id: {
       type: new GraphQLNonNull(GraphQLID)
@@ -19,7 +17,7 @@ export default new GraphQLObjectType({
       type: GraphQLString
     },
     dateOf: {
-      type: StriGraphQLStringng
+      type: GraphQLString
     },
     shotNumber: {
       type: GraphQLInt
@@ -27,10 +25,10 @@ export default new GraphQLObjectType({
     // polarCoords: {type: Array},
     // cartesianCoords: {type: Array},
     elevation: {
-      type: GraphQLInt
+      type: GraphQLFloat
     },
     windage: {
-      type: GraphQLInt
+      type: GraphQLFloat
     },
     practice: {
       type: GraphQLBoolean
