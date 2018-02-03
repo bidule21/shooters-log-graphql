@@ -6,10 +6,11 @@ import bodyParser from 'body-parser';
 import httpErrors from 'http-errors'
 import schema from './graphql/schema';
 import graphiql from 'graphiql';
+import Competition from './models/competition-model';
 
 const MONGO_URL = 'mongodb://localhost:27017/graphql';
 const dev = process.env.NODE_ENV === 'development';
-const Competition = require('./models/competition-model');
+
 
 let app = express();
 /** below, we are defining the route "./graphql" for express server.

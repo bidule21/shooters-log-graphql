@@ -7,17 +7,23 @@ import {
   GraphQLID
 } from 'graphql';
 
-import {getCompetition} from './queries/competition-query';
+import {competitionQueries} from './queries/competition-query';
+import {competitionMutations} from './mutations/competition-mutation';
+import competitionType from '../graphql/types/competition-type';
 
-const competitionType = require('../graphql/types/competition-type');
+// const competitionType = require('../graphql/types/competition-type');
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
-    fields: getCompetition
+    fields: () => ({
+      ...competitionQueries,
+    }),
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'Mutation',
+    fields: () => ({
+      ...competitionMutations,
+    }),
   })
-  // mutation: new GraphQLObjectType({
-  //   name: 'Mutation',
-  //   fields: {}
-  // })
-  });
+});
