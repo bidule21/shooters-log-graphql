@@ -1,16 +1,20 @@
 import competitionModel from '../../models/competition-model';
 import competitionType from '../types/competition-type';
+import httpErrors from 'http-errors';
 
 import {
   GraphQLID,
   GraphQLString,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLList
 } from 'graphql';
 
 
 
-const getCompetition = {
-  competition: {
+// const getCompetition = {
+  const competitionQueries = {
+
+  getCompetition: {
     type: competitionType,
     args: {
       _id: {
@@ -29,10 +33,24 @@ const getCompetition = {
             .catch(err => reject(httpErrors(404, err.message)));
         });
     },
+    }, 
+
+  getAllCompetitions: {
+    type: new GraphQLList(competitionType),
+    resolve: async (prevValue, _ , {}) => {
+      console.log('entered getAllCompetitions');
+      return new Promise((resolve, reject) => {
+        competitionModel.find()
+        .then(competitions => {
+          console.log('results in getAllCompetions: ', competitions)
+          resolve(competitions);
+        })
+        .catch(err => reject(httpErrors(404, err.message)));
+      });
     }
   }
-
+  };
 
 export {
-  getCompetition
+  competitionQueries,
 };
