@@ -36,15 +36,30 @@ import {
     },
     }, 
 
+    getAllMatchesByCompetitionId: {
+      type: new GraphQLList(matchType),
+      resolve: async (prevValue, args, {}) => {
+        console.log('entered getAllMatchsByCompetitionId');
+        return new Promise((resolve, reject) => {
+          matchModel.find({'competitionId': args.competitionId})
+          .then(matches => {
+            console.log('results in getAllMatchs: ', matches)
+            resolve(matches);
+          })
+          .catch(err => reject(httpErrors(404, err.message)));
+        });
+      }
+    },
+
   getAllMatches: {
     type: new GraphQLList(matchType),
     resolve: async (prevValue, _ , {}) => {
       console.log('entered getAllMatchs');
       return new Promise((resolve, reject) => {
         matchModel.find()
-        .then(matchs => {
-          console.log('results in getAllMatchs: ', matchs)
-          resolve(matchs);
+        .then(matches => {
+          console.log('results in getAllMatchs: ', matches)
+          resolve(matches);
         })
         .catch(err => reject(httpErrors(404, err.message)));
       });

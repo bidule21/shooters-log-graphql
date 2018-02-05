@@ -5,7 +5,11 @@ import {
   GraphQLString,
   GraphQLID,
   GraphQLInt,
-  GraphQLNonNull} from 'graphql';
+  GraphQLNonNull,
+  GraphQLList} from 'graphql';
+
+import matchType from './match-type';
+import {matchQueries} from '../queries/match-query'
 
 export default  new GraphQLObjectType({
   name: 'CompetitionType',
@@ -24,6 +28,9 @@ export default  new GraphQLObjectType({
     },
     dateOf: {
       type: GraphQLString
+    },
+    matches: {
+      type: new GraphQLList(matchType)
     }
   }),
 });

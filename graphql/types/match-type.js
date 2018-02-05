@@ -1,4 +1,10 @@
-import {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLNonNull, GraphQLInt} from 'graphql';
+import {
+  GraphQLObjectType, 
+  GraphQLString, 
+  GraphQLID, 
+  GraphQLNonNull, 
+  GraphQLInt} from 'graphql';
+import competitionType from './competition-type';
 
 
 export default  new GraphQLObjectType({
@@ -39,6 +45,9 @@ export default  new GraphQLObjectType({
     },
     weather: {
       type: GraphQLString
+    },
+    competition: {
+      type: competitionType
     }
   }),
 });
