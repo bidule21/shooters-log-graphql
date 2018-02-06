@@ -30,7 +30,7 @@ export default  new GraphQLObjectType({
       type: GraphQLString
     },
     currentRoundCount: {
-      type: competitionType
+      type: GraphQLInt
     }
   }),
 });
