@@ -38,12 +38,17 @@ import {
 
     getAllMatchesByCompetitionId: {
       type: new GraphQLList(matchType),
+      args: {
+        competitionId: {
+          type: new GraphQLNonNull(GraphQLID)
+        }
+      },
       resolve: async (prevValue, args, {}) => {
-        console.log('entered getAllMatchsByCompetitionId');
+        console.log('entered getAllMatchesByCompetitionId');
         return new Promise((resolve, reject) => {
           matchModel.find({'competitionId': args.competitionId})
           .then(matches => {
-            console.log('results in getAllMatchs: ', matches)
+            console.log('results in getAllMatchesByCompetitionId: ', matches)
             resolve(matches);
           })
           .catch(err => reject(httpErrors(404, err.message)));
