@@ -1,12 +1,17 @@
-import {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLNonNull, GraphQLInt, GraphQLFloat} from 'graphql';
-import loadType from './load-type';
+import {
+  GraphQLObjectType, 
+  GraphQLString, 
+  GraphQLID, 
+  GraphQLNonNull, 
+  GraphQLInt, 
+  GraphQLFloat} from 'graphql';
 
 
 export default  new GraphQLObjectType({
   name: 'loadType',
   fields: () => ({
     _id: {
-      type: new GraphQLNonNull(GraphQLID),
+      type: new GraphQLNonNull(GraphQLID)
     },
     brassBrand: {
       type: GraphQLString
@@ -26,10 +31,10 @@ export default  new GraphQLObjectType({
     bulletBrand: {
       type: GraphQLString
     }, 
-    bulletWeight: {
+    bulletCaliber: {
       type: GraphQLInt
     },
-    bulletCaliber: {
+    bulletWeight: {
       type: GraphQLInt
     },
     roundOAL: {
@@ -44,5 +49,5 @@ export default  new GraphQLObjectType({
     muzzleVelocity: {
       type: GraphQLInt
     }
-  }),
+  })
 });

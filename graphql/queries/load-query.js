@@ -1,5 +1,6 @@
 import loadType from '../types/load-type';
 import loadModel from '../../models/load-model';
+import rifleType from '../types/rifle-type';
 import httpErrors from 'http-errors';
 
 import {
@@ -12,7 +13,7 @@ import {
 
   const loadQueries = {
 
-  getRifle: {
+  getLoad: {
     type: loadType,
     args: {
       _id: {
@@ -30,11 +31,11 @@ import {
             })
             .catch(err => reject(httpErrors(404, err.message)));
         });
-    },
-    }, 
+    }
+  },
 
   getAllLoads: {
-    type: new GraphQLList(rifleType),
+    type: new GraphQLList(loadType),
     resolve: async (prevValue, _ , {}) => {
       console.log('entered getAllLoads');
       return new Promise((resolve, reject) => {

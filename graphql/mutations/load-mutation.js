@@ -1,5 +1,6 @@
-import loadModel from '../../models/load-model';
+
 import loadType from '../types/load-type';
+import loadModel from '../../models/load-model';
 import httpErrors from 'http-errors';
 
 
@@ -9,8 +10,10 @@ import {
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
-  GraphQLInt
+  GraphQLInt,
+  GrpahQLFloat
 } from 'graphql';
+import { GraphQLFloat } from 'graphql/type/scalars';
 
 const loadMutations = {
   createLoad: {
@@ -20,7 +23,7 @@ const loadMutations = {
         type: GraphQLString
       },
       brassCaliber: {
-        type: GraphQLString
+        type: GraphQLInt
       },
       powderBrand: {
         type: GraphQLString
@@ -32,22 +35,22 @@ const loadMutations = {
         type: GraphQLFloat
       },
       bulletBrand: {
-        type: GraphQLInt
+        type: GraphQLString
       },
       bulletCaliber: {
         type: GraphQLInt
       },
       bulletWeight: {
-        type: GraphQLInt
+        type: GraphQLFloat
       },
       roundOAL: {
-        type: GraphQLInt
+        type: GraphQLFloat
       },
       primerBrand: {
         type: GraphQLString
       },
       primerName: {
-        GraphQLString
+        type: GraphQLString
       },
       muzzleVelocity: {
         type: GraphQLInt
@@ -61,17 +64,20 @@ const loadMutations = {
           brassBrand: args.brassBrand, 
           brassCaliber: args.brassCaliber, 
           powderBrand: args.powderBrand, 
-          powderName: args.powderName,
-          powderWeight: args.powderWeight,
-          bulletBrand: args.bulletBrand,
-          bulletCaliber: args.bulletCaliber,
-          bulletWeight: args.bulletWeight,
-          roundOAL: args.roundOAL,
-          primerBrand: args.primerBrand,
-          primerName: args.primerName, 
+          powderName: args.powderName, 
+          powderWeight: args.powderWeight, 
+          bulletBrand: args.bulletBrand, 
+          bulletCaliber: args.bulletCaliber, 
+          bulletWeight: args.bulletWeight, 
+          roundOAL: args.roundOAL, 
+          primerBrand: args.primerBrand, 
+          primerName: args.primerName,
           muzzleVelocity: args.muzzleVelocity
         })
-        .then(resolve)
+        .then(load => {
+          console.log('return value of createLoad: ', load);
+          resolve(load);
+        })
         .catch(err => reject(httpErrors(404, err.message)));
       })
     }

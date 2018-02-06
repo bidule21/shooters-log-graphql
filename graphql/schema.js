@@ -14,9 +14,14 @@ import { matchMutations } from './mutations/match-mutation';
 import { matchQueries } from './queries/match-query';
 import {shotQueries} from './queries/shot-query';
 import {shotMutations} from './mutations/shot-mutation';
+import {rifleQueries} from './queries/rifle-query';
+import {rifleMutations} from './mutations/rifle-mutation';
+import {barrelQueries} from './queries/barrel-query';
+import {barrelMutations} from './mutations/barrel-mutation';
+import {loadQueries} from './queries/load-query';
+import {loadMutations} from './mutations/load-mutation';
 import shotModel from '../models/shot-model';
 
-// const competitionType = require('../graphql/types/competition-type');
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -25,7 +30,10 @@ export default new GraphQLSchema({
       ...competitionQueries,
       ...matchQueries,
       ...shotQueries,
-    }),
+      ...rifleQueries,
+      ...barrelQueries,
+      ...loadQueries,
+    })
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
@@ -33,6 +41,9 @@ export default new GraphQLSchema({
       ...competitionMutations,
       ...matchMutations,
       ...shotMutations,
-    }),
+      ...rifleMutations,
+      ...barrelMutations,
+      ...loadMutations,
+    })
   })
 });
