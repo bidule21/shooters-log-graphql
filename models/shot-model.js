@@ -1,11 +1,12 @@
 'use strict';
 import mongoose from 'mongoose';
 
-const shotSchema = module.exports = mongoose.Schema({
+const shotSchema = mongoose.Schema({
+  matchId:    {type: mongoose.Schema.ObjectId, required: true},
   xValue: {type: Boolean, required: true},
   score: {type: String, required: true},
   dateOf: {type: String},
-  shotNumber: {type: Number},
+  shotNumber: {type: Number, required: true},
   polarCoords: {type: Array},
   cartesianCoords: {type: Array},
   elevation: {type: Number},

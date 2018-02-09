@@ -1,18 +1,70 @@
-'use strict';
+import {
+  GraphQLObjectType, 
+  GraphQLString, 
+  GraphQLID, 
+  GraphQLNonNull, 
+  GraphQLInt,
+  GraphQLList} from 'graphql';
+import competitionType from './competition-type';
+import httpErrors from 'http-errors';
+import ShotType from './shot-type';
+import shotModel from '../../models/shot-model';
+import shotQueries from '../queries/shot-query';
 
-const {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLNonNull} = require('graphql');
-
-export default new GraphQLObjectType({
-  name: 'match',
-  fields: {
+export default  new GraphQLObjectType({
+  name: 'MatchType',
+  fields: () => ({
     _id: {
-      type: new GraphQLNonNull(GraphQLID)
+      type: new GraphQLNonNull(GraphQLID),
     },
     competitionId: {
-      type: GraphQLID
+      type: new GraphQLNonNull(GraphQLID)
+    },
+    matchNumber: {
+      type: new GraphQLNonNull(GraphQLInt)
+    },
+    targetNumber: {
+      type: new GraphQLNonNull(GraphQLInt)
+    },
+    distanceToTarget: {
+      type: new GraphQLNonNull(GraphQLInt)
+    },
+    relay: {
+      type: new GraphQLNonNull(GraphQLInt)
+    },
+    startTime: {
+      type: GraphQLString
+    },
+    temperature: {
+      type: GraphQLInt
+    },
+    windClockDirection: {
+      type: GraphQLInt
+    },
+    windSpeed: {
+      type: GraphQLInt
+    }, 
+    lightClockDirection: {
+      type: GraphQLInt
     },
     weather: {
-      type:GraphQLString
+      type: GraphQLString
+    },
+    competition: {
+      type: competitionType
+    },
+    shots: {
+      type: new GraphQLList(ShotType),
+      resolve: (MatchType) => {
+        return new Promise((resolve, reject) => {
+          shotModel.find({'matchId': MatchType._id})
+          .then(shots => {
+            console.log('results in shots resolver: \n', shots);
+            resolve(shots);
+          })
+          .catch(err => reject(httpErrors(404, err.message)));
+        });
+      }
     }
-  }
+  }),
 });
