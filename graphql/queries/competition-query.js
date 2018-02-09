@@ -24,7 +24,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: (prevValue, args, {}) => {
       console.log('entered getCompetition');
         return new Promise((resolve, reject) => {
           console.log('value of args.id: ', args._id);
@@ -40,7 +40,7 @@ import {
 
   getAllCompetitions: {
     type: new GraphQLList(competitionType),
-    resolve: async (prevValue, _ , {}) => {
+    resolve: (prevValue, _ , {}) => {
       console.log('entered getAllCompetitions');
       return new Promise((resolve, reject) => {
         competitionModel.find()

@@ -23,7 +23,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: (prevValue, args, {}) => {
       console.log('entered getShot');
         return new Promise((resolve, reject) => {
           console.log('value of args.id: ', args._id);
@@ -44,7 +44,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args , {}) => {
+    resolve: (prevValue, args , {}) => {
       console.log('entered getMatchShots');
       return new Promise((resolve, reject) => {
         shotModel.find({'matchId': args.matchId})

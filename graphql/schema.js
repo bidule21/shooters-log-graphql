@@ -9,7 +9,6 @@ import {
 
 import {competitionQueries} from './queries/competition-query';
 import {competitionMutations} from './mutations/competition-mutation';
-import competitionType from '../graphql/types/competition-type';
 import { matchMutations } from './mutations/match-mutation';
 import { matchQueries } from './queries/match-query';
 import {shotQueries} from './queries/shot-query';
@@ -20,7 +19,6 @@ import {barrelQueries} from './queries/barrel-query';
 import {barrelMutations} from './mutations/barrel-mutation';
 import {loadQueries} from './queries/load-query';
 import {loadMutations} from './mutations/load-mutation';
-import shotModel from '../models/shot-model';
 
 
 export default new GraphQLSchema({

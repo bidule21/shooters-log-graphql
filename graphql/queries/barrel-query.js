@@ -19,7 +19,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: (prevValue, args, {}) => {
       console.log('entered getBarrel');
         return new Promise((resolve, reject) => {
           console.log('value of args.id: ', args._id);
@@ -35,7 +35,7 @@ import {
 
   getAllBarrels: {
     type: new GraphQLList(barrelType),
-    resolve: async (prevValue, _ , {}) => {
+    resolve: (prevValue, _ , {}) => {
       console.log('entered getAllBarrels');
       return new Promise((resolve, reject) => {
         barrelModel.find()

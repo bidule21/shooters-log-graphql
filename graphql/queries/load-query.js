@@ -20,7 +20,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: (prevValue, args, {}) => {
       console.log('entered getLoad');
         return new Promise((resolve, reject) => {
           console.log('value of args.id: ', args._id);
@@ -36,7 +36,7 @@ import {
 
   getAllLoads: {
     type: new GraphQLList(loadType),
-    resolve: async (prevValue, _ , {}) => {
+    resolve: (prevValue, _ , {}) => {
       console.log('entered getAllLoads');
       return new Promise((resolve, reject) => {
         loadModel.find()

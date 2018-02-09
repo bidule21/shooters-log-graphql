@@ -18,7 +18,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: (prevValue, args, {}) => {
       console.log('entered getRifle');
         return new Promise((resolve, reject) => {
           console.log('value of args.id: ', args._id);
@@ -34,7 +34,7 @@ import {
 
   getAllRifles: {
     type: new GraphQLList(rifleType),
-    resolve: async (prevValue, _ , {}) => {
+    resolve: (prevValue, _ , {}) => {
       console.log('entered getAllRifles');
       return new Promise((resolve, reject) => {
         rifleModel.find()

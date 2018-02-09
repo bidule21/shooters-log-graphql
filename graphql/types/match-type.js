@@ -3,9 +3,13 @@ import {
   GraphQLString, 
   GraphQLID, 
   GraphQLNonNull, 
-  GraphQLInt} from 'graphql';
+  GraphQLInt,
+  GraphQLList} from 'graphql';
 import competitionType from './competition-type';
-
+import httpErrors from 'http-errors';
+import ShotType from './shot-type';
+import shotModel from '../../models/shot-model';
+import shotQueries from '../queries/shot-query';
 
 export default  new GraphQLObjectType({
   name: 'MatchType',
@@ -48,6 +52,19 @@ export default  new GraphQLObjectType({
     },
     competition: {
       type: competitionType
+    },
+    shots: {
+      type: new GraphQLList(ShotType),
+      resolve: (MatchType) => {
+        return new Promise((resolve, reject) => {
+          shotModel.find({'matchId': MatchType._id})
+          .then(shots => {
+            console.log('results in shots resolver: \n', shots);
+            resolve(shots);
+          })
+          .catch(err => reject(httpErrors(404, err.message)));
+        });
+      }
     }
   }),
 });
