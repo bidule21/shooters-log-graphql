@@ -22,7 +22,7 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: (prevValue, args, {}) => {
       console.log('entered getMatch');
         return new Promise((resolve, reject) => {
           console.log('value of args.id: ', args._id);
@@ -43,7 +43,7 @@ import {
           type: new GraphQLNonNull(GraphQLID)
         }
       },
-      resolve: async (prevValue, args, {}) => {
+      resolve: (prevValue, args, {}) => {
         console.log('entered getAllMatchesByCompetitionId');
         return new Promise((resolve, reject) => {
           matchModel.find({'competitionId': args.competitionId})
@@ -58,7 +58,7 @@ import {
 
   getAllMatches: {
     type: new GraphQLList(matchType),
-    resolve: async (prevValue, _ , {}) => {
+    resolve: (prevValue, _ , {}) => {
       console.log('entered getAllMatchs');
       return new Promise((resolve, reject) => {
         matchModel.find()
