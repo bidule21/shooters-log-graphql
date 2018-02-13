@@ -16,7 +16,6 @@ import {
 
 // const getCompetition = {
   const competitionQueries = {
-
   getCompetition: {
     type: competitionType,
     args: {
@@ -45,7 +44,7 @@ import {
       return new Promise((resolve, reject) => {
         competitionModel.find()
         .then(competitions => {
-          console.log('results in getAllCompetions: ', competitions)
+          console.log('results in getAllCompetitions: ', competitions)
           resolve(competitions);
         })
         .catch(err => reject(httpErrors(404, err.message)));
