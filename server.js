@@ -1,4 +1,5 @@
 
+import {} from 'dotenv/config';
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import mongoose from 'mongoose';
@@ -7,18 +8,23 @@ import httpErrors from 'http-errors'
 import schema from './graphql/schema';
 import graphiql from 'graphiql';
 import Competition from './models/competition-model';
+const BASE_URL = 'mongodb://localhost:27017/';
 
-const MONGO_URL = 'mongodb://localhost:27017/graphql';
+const MONGO_URL = `${BASE_URL}${process.env.TEST_DB || 'graphql'}`;
 const dev = process.env.NODE_ENV === 'development';
-
+const SECRET = process.env.SECRET_KEY;
 
 let app = express();
 /** below, we are defining the route "./graphql" for express server.
  * Any request to this route are fed to the graphql-express middleware "graphqlHTTP".
   */
+
 app.use('/graphql', graphqlHTTP(req =>({
   schema,
-  context:{},
+  context:{
+    req: req,
+    test:'example req'
+  },
   pretty: true,
   graphiql: dev,
   formatError: (error) => {
@@ -36,6 +42,7 @@ const db = mongoose.connection;
 // const competitions = db.collection('competitions');
 db.on('error', () => {console.log('-------FAILED to connect to mongoose'); });
 db.on('open', () => { console.log('-------CONNECTED to mongoose-----'); });
+
 
 let server = app.listen(8080, () => {
   console.log(`http server listening at port  ${server.address().port}
