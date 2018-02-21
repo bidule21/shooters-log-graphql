@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema({
   userName:         {type: String, required: true, unique: true},
-  // password:         {type: String, required: true},
+  password:         {type: String, required: true},
   findHash:         {type: String, unique: true},
   nraNumber:        {type: Number},
   nraQualification: {type: String},
-  firstName: {type: String, required: true},
-  lastName: {type: String, required: true},
-  nameSuffix: {type: String}
+  firstName:        {type: String, required: true},
+  lastName:         {type: String, required: true},
+  nameSuffix:       {type: String}
 });
 
 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon server.js --exec babel-node",
+    "start": "nodemon server.js --exec babel-node",
     "test-server": "TEST_DB=test nodemon server.js --exec babel-node",
     "test": "jest -i --coverage"
   },
