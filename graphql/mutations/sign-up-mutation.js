@@ -2,11 +2,12 @@
 import userModel from '../../models/user-model';
 import userType from '../types/user-type';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 
 import {
   GraphQLSchema,
-  GrpahQLObjectType,
+  GraphqlQLObjectType,
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
@@ -43,9 +44,13 @@ const signUpMutations = {
       console.log('entered resolve for createUser');
       args.password = await bcrypt.hash(args.password, 12);
       console.log('password: ', args.password);
+      const findHash = await crypto.randomBytes(256).toString('hex');
+      console.log('findhash: ', findHash);
+
       return userModel.create({
           userName: args.userName, 
-          findHash: args.password, 
+          password: args.password,
+          findHash: findHash, 
           nraNumber: args.nraNumber, 
           nraQualification: args.nraQualification, 
           firstName: args.firstName, 
