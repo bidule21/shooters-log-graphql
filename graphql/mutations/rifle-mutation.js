@@ -44,7 +44,7 @@ const rifleMutations = {
         rifleName: args.rifleName,
         rifleBrand: args.rifleBrand, 
         rifleModel: args.rifleModel, 
-        rifleAction: args.action, 
+        rifleAction: args.rifleAction, 
         rifleCategory: args.rifleCategory,
         barrelName: args.barrelName,
         barrelId: barrelId,

@@ -23,7 +23,7 @@ const shotMutations = {
       matchId: {
         type: new GraphQLNonNull(GraphQLID)
       },
-      xValue: {
+      isXValue: {
         type: new GraphQLNonNull(GraphQLBoolean)
       },
       score: {
@@ -51,25 +51,26 @@ const shotMutations = {
         type: GraphQLBoolean
       }
     },
-    resolve: async (prevValue, args, {}) => {
-      console.log('entered resolve for createShot');
-      return new Promise((resolve, reject) => {
-        console.log('values of args in createShot: ', args);
-        shotModel.create({
-          matchId: args.matchId, 
-          xValue: args.xValue,
-          score: args.score,
-          shotNumber: args.shotNumber,
-          dateOf: args.dateOf,
-          elevation: args.elevation,
-          windage: args.windage,
-          practice: args.practice,
-          sighter: args.sighter,
-          record: args.record
-        })
-        .then(resolve)
-        .catch(err => reject(httpErrors(404, err.message)));
-      })
+    resolve: async (prevValue, args, {user}) => {
+    console.log('entered resolve for createShot');
+    console.log('prevValue passed to createShot: ', prevValue);
+    console.log('value of user in createShot: ', user);
+    console.log('values of args in createShot: ', args);
+    const shot = shotModel.create({
+      userId: user.userId,
+      matchId: args.matchId, 
+      isXValue: args.isXValue,
+      score: args.score,
+      shotNumber: args.shotNumber,
+      dateOf: args.dateOf,
+      elevation: args.elevation,
+      windage: args.windage,
+      practice: args.practice,
+      sighter: args.sighter,
+      record: args.record
+    });
+    console.log()
+    return shot;
     }
   }
 };

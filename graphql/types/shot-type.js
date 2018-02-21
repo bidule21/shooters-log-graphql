@@ -6,11 +6,14 @@ export default new GraphQLObjectType({
     _id: {
       type: new GraphQLNonNull(GraphQLID)
     },
+    userId: {
+      type: GraphQLID
+    },
     //you may have to include a match object with specific _id field to make //this work
     matchId: {
       type: GraphQLID
     },
-    xValue: {
+    isXValue: {
       type: GraphQLBoolean
     },
     score: {

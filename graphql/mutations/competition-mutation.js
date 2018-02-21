@@ -1,4 +1,5 @@
 import competitionModel from '../../models/competition-model';
+import rifleModel from '../../models/rifle-model';
 import competitionType from '../types/competition-type';
 import httpErrors from 'http-errors';
 
@@ -19,6 +20,9 @@ const competitionMutations = {
       location: {
         type: new GraphQLNonNull(GraphQLString)
       },
+      rifleName: {
+        type: GraphQLString
+      },
       action: {
         type: new GraphQLNonNull(GraphQLString)
       },
@@ -32,13 +36,18 @@ const competitionMutations = {
     resolve: async (prevValue, args, {user}) => {
       console.log('entered resolve for createCompetition');
       console.log('values of args in createCompetition: ', args);
+      const rifle = await rifleModel.findOne({userId: user.userId, rifleName: args.rifleName});
+      console.log('rifle in competition mutation: ', rifle);
       const competition = await competitionModel.create({
+        rifleId: rifle._id,
         userId: user.userId,
+        rifleName: args.rifleName,
         location: args.location, 
-        action: args.action, 
+        action: rifle.rifleAction, 
         caliber: args.caliber, 
         dateOf: args.dateOf
       });
+      console.log('competition: ', competition);
       return competition;
     }
   }
