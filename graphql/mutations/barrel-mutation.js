@@ -1,5 +1,6 @@
 import barrelModel from '../../models/barrel-model';
 import barrelType from '../types/barrel-type';
+import rifleModel from '../../models/rifle-model';
 import httpErrors from 'http-errors';
 
 
@@ -16,7 +17,10 @@ const barrelMutations = {
   createBarrel: {
     type: barrelType,
     args: {
-      rifleId: {
+      barrelName: {
+        type: GraphQLString
+      },
+      rifleName: {
         type: GraphQLString
       },
       barrelBrand: {
@@ -41,23 +45,27 @@ const barrelMutations = {
         type: GraphQLInt
       }
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: async (prevValue, args, {user}) => {
       console.log('entered resolve for createBarrel');
-      return new Promise((resolve, reject) => {
-        console.log('values of args in createBarrel: ', args);
-        barrelModel.create({
-          rifleId: args.rifleId, 
-          barrelBrand: args.barrelBrand, 
-          barrelType: args.barrelType, 
-          barrelTwist: args.barrelTwist,
-          barrelLength: args.barrelLength,
-          barrelChambered: args.barrelChambered,
-          barrelLife: args.barrelLife,
-          currentRoundCount: args.currentRoundCount
-        })
-        .then(resolve)
-        .catch(err => reject(httpErrors(404, err.message)));
-      })
+      console.log('values of args in createBarrel: ', args);
+      console.log('value of userId: ', user.userId);
+      const rifle =  await rifleModel.findOne({userId: user.userId, rifleName: args.rifleName });
+      console.log('rifle returned in createBarrel: ', rifle);
+      const barrel = await barrelModel.create({
+        rifleId: rifle._id,
+        userId: user.userId,
+        barrelName: args.barrelName,
+        rifleName: args.rifleName, 
+        barrelBrand: args.barrelBrand, 
+        barrelType: args.barrelType, 
+        barrelTwist: args.barrelTwist,
+        barrelLength: args.barrelLength,
+        barrelChambered: args.barrelChambered,
+        barrelLife: args.barrelLife,
+        currentRoundCount: args.currentRoundCount
+      });
+      console.log('returned barrel in createBarrel:\n ', barrel);
+      return barrel;
     }
   }
 };

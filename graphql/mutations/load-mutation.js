@@ -11,19 +11,24 @@ import {
   GraphQLNonNull,
   GraphQLString,
   GraphQLInt,
-  GrpahQLFloat
+  GraphQLFloat
 } from 'graphql';
-import { GraphQLFloat } from 'graphql/type/scalars';
 
 const loadMutations = {
   createLoad: {
     type: loadType,
     args: {
+      loadName: {
+        type: GraphQLString
+      },
       brassBrand: {
         type: GraphQLString
       },
       brassCaliber: {
         type: GraphQLInt
+      },
+      brassLot: {
+        type: GraphQLString
       },
       powderBrand: {
         type: GraphQLString
@@ -34,6 +39,9 @@ const loadMutations = {
       powderWeight: {
         type: GraphQLFloat
       },
+      powderLot: {
+        type: GraphQLString
+      },
       bulletBrand: {
         type: GraphQLString
       },
@@ -43,8 +51,8 @@ const loadMutations = {
       bulletWeight: {
         type: GraphQLFloat
       },
-      roundOAL: {
-        type: GraphQLFloat
+      bulletLot: {
+        type: GraphQLString
       },
       primerBrand: {
         type: GraphQLString
@@ -52,34 +60,38 @@ const loadMutations = {
       primerName: {
         type: GraphQLString
       },
-      muzzleVelocity: {
-        type: GraphQLInt
-      }
+      primerLot: {
+        type: GraphQLString
+      },
+      roundOAL: {
+        type: GraphQLFloat
+      },
     },
-    resolve: async (prevValue, args, {}) => {
+    resolve: async (prevValue, args, {user}) => {
       console.log('entered resolve for createload');
-      return new Promise((resolve, reject) => {
-        console.log('values of args in createLoad: ', args);
-        loadModel.create({
-          brassBrand: args.brassBrand, 
-          brassCaliber: args.brassCaliber, 
-          powderBrand: args.powderBrand, 
-          powderName: args.powderName, 
-          powderWeight: args.powderWeight, 
-          bulletBrand: args.bulletBrand, 
-          bulletCaliber: args.bulletCaliber, 
-          bulletWeight: args.bulletWeight, 
-          roundOAL: args.roundOAL, 
-          primerBrand: args.primerBrand, 
-          primerName: args.primerName,
-          muzzleVelocity: args.muzzleVelocity
-        })
-        .then(load => {
-          console.log('return value of createLoad: ', load);
-          resolve(load);
-        })
-        .catch(err => reject(httpErrors(404, err.message)));
-      })
+      console.log('value of user context in createload: ', user);
+      console.log('values of args in createLoad: ', args);
+      const load = loadModel.create({
+        userId: user.userId,
+        loadName: args.loadName,
+        brassBrand: args.brassBrand, 
+        brassCaliber: args.brassCaliber,
+        brassLot: args.brassLot, 
+        powderBrand: args.powderBrand, 
+        powderName: args.powderName, 
+        powderWeight: args.powderWeight,
+        powderLot: args.powderLot, 
+        bulletBrand: args.bulletBrand, 
+        bulletCaliber: args.bulletCaliber, 
+        bulletWeight: args.bulletWeight, 
+        bulletLot: args.bulletLot,
+        primerBrand: args.primerBrand, 
+        primerName: args.primerName,
+        primerLot: args.primerLot,
+        roundOAL: args.roundOAL
+      });
+      console.log('returned load in createLoad: ', load);
+      return load;
     }
   }
 };
