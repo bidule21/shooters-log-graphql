@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 
 const rifleSchema = mongoose.Schema({
+  userId:             {type: mongoose.Schema.ObjectId},
   rifleName:          {type: String},
   rifleBrand:         {type: String},
   rifleModel:         {type: String},

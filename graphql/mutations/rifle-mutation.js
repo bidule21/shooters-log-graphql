@@ -41,6 +41,7 @@ const rifleMutations = {
       console.log('values of args in createRifle: ', args);
       const barrelId = await barrelModel.findOne({userId: user.userId, barrelName: args.barrelName});
       const rifle = await rifleModel.create({
+        UserId: user.userId,
         rifleName: args.rifleName,
         rifleBrand: args.rifleBrand, 
         rifleModel: args.rifleModel, 

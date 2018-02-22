@@ -14,38 +14,26 @@ import {
   getRifle: {
     type: rifleType,
     args: {
-      _id: {
-        type: new GraphQLNonNull(GraphQLID)
+      rifleName: {
+        type: GraphQLString
       }
     },
-    resolve: (prevValue, args, {}) => {
+    resolve: async (prevValue, args, {user}) => {
       console.log('entered getRifle');
-        return new Promise((resolve, reject) => {
-          console.log('value of args.id: ', args._id);
-          rifleModel.findOne({'_id': args._id})
-            .then(rifle => {
-              console.log('results of find in rifle-query.js:  ', rifle);
-              resolve(rifle);
-            })
-            .catch(err => reject(httpErrors(404, err.message)));
-        });
+      console.log('value of args.id: ', args.rifleName);
+      const rifle = await rifleModel.findOne({'rifleName': args.rifleName, userId: user.userId});
+      return rifle;
     },
     }, 
 
   getAllRifles: {
     type: new GraphQLList(rifleType),
-    resolve: (prevValue, _ , {}) => {
+    resolve: async (prevValue, _ , {user}) => {
       console.log('entered getAllRifles');
-      return new Promise((resolve, reject) => {
-        rifleModel.find()
-        .then(rifles => {
-          console.log('results in getAllRifless: ', rifles)
-          resolve(rifles);
-        })
-        .catch(err => reject(httpErrors(404, err.message)));
-      });
+        const rifles = await rifleModel.find({userId: user.userId});
+        return rifles;
+      }
     }
-  }
   };
 
 export {
