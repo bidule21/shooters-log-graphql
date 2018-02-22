@@ -1,5 +1,12 @@
-import {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLNonNull, GraphQLInt} from 'graphql';
-import rifleType from './rifle-type';
+import barrelType from './barrel-type';
+
+import {
+  GraphQLObjectType, 
+  GraphQLString, 
+  GraphQLID, 
+  GraphQLNonNull, 
+  GraphQLInt} from 'graphql';
+
 
 
 export default  new GraphQLObjectType({
@@ -8,8 +15,11 @@ export default  new GraphQLObjectType({
     _id: {
       type: new GraphQLNonNull(GraphQLID),
     },
-    rifleId: {
-      type: new GraphQLNonNull(GraphQLID)
+    barrelName: {
+      type: GraphQLString
+    },
+    rifleName: {
+      type: GraphQLString
     },
     barrelBrand: {
       type: GraphQLString

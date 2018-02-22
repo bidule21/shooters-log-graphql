@@ -22,6 +22,9 @@ export default  new GraphQLObjectType({
     location: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    rifleName: {
+      type: GraphQLString
+    },
     action: {
       type: new GraphQLNonNull(GraphQLString)
     },
@@ -33,15 +36,9 @@ export default  new GraphQLObjectType({
     },
     matches: {
       type: new GraphQLList(matchType),
-      resolve: (CompetitionType) => {
-        return new Promise((resolve, reject) => {
-          matchModel.find({'competitionId': CompetitionType._id})
-          .then(matches => {
-            console.log('results in matches resolver: ', matches);
-            resolve(matches);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
+      resolve:  async (CompetitionType, _, {user}) => {
+          const matches = await matchModel.find({'competitionId': CompetitionType._id, userId: user.userId});
+          return matches;
       }
     }
   }),

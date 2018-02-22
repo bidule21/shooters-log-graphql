@@ -22,55 +22,43 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: (prevValue, args, {}) => {
-      console.log('entered getMatch');
-        return new Promise((resolve, reject) => {
-          console.log('value of args.id: ', args._id);
-          matchModel.findOne({'_id': args._id})
-            .then(match => {
-              console.log('results of find in match-query.js:  ', match);
-              resolve(match);
-            })
-            .catch(err => reject(httpErrors(404, err.message)));
-        });
+    resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
+      const match= await matchModel.findOne({'_id': args._id, userId: user.userId});
+      return match;
+    }
     },
-    }, 
 
-    getAllMatchesByCompetitionId: {
-      type: new GraphQLList(matchType),
-      args: {
-        competitionId: {
-          type: new GraphQLNonNull(GraphQLID)
-        }
-      },
-      resolve: (prevValue, args, {}) => {
-        console.log('entered getAllMatchesByCompetitionId');
-        return new Promise((resolve, reject) => {
-          matchModel.find({'competitionId': args.competitionId})
-          .then(matches => {
-            console.log('results in getAllMatchesByCompetitionId: ', matches)
-            resolve(matches);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
+  getAllMatchesByCompetitionId: {
+    type: new GraphQLList(matchType),
+    args: {
+      competitionId: {
+        type: new GraphQLNonNull(GraphQLID)
       }
     },
+    resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
+      const matches = await matchModel.find({'competitionId': args.competitionId, userId: user.userId});
+      return matches;
+    }
+  },
 
   getAllMatches: {
     type: new GraphQLList(matchType),
-    resolve: (prevValue, _ , {}) => {
-      console.log('entered getAllMatchs');
-      return new Promise((resolve, reject) => {
-        matchModel.find()
-        .then(matches => {
-          console.log('results in getAllMatchs: ', matches)
-          resolve(matches);
-        })
-        .catch(err => reject(httpErrors(404, err.message)));
-      });
+    resolve: async (prevValue, _ , {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
+    console.log('entered getAllMatchs');
+    const matches = await matchModel.find({userId: user.userId} );
+    return matches;
     }
   }
-  };
+};
 
 export {
   matchQueries,

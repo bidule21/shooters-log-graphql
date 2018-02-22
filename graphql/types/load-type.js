@@ -13,11 +13,17 @@ export default  new GraphQLObjectType({
     _id: {
       type: new GraphQLNonNull(GraphQLID)
     },
+    loadName: {
+      type: GraphQLString
+    },
     brassBrand: {
       type: GraphQLString
     },
     brassCaliber: {
       type: GraphQLInt
+    },
+    brassLot: {
+      type: GraphQLString
     },
     powderBrand: {
       type: GraphQLString
@@ -28,6 +34,9 @@ export default  new GraphQLObjectType({
     powderWeight: {
       type: GraphQLFloat
     },
+    powderLot: {
+      type:GraphQLString
+    },
     bulletBrand: {
       type: GraphQLString
     }, 
@@ -37,8 +46,8 @@ export default  new GraphQLObjectType({
     bulletWeight: {
       type: GraphQLInt
     },
-    roundOAL: {
-      type: GraphQLFloat
+    bulletLot: {
+      type: GraphQLString
     },
     primerBrand: {
       type: GraphQLString
@@ -46,8 +55,11 @@ export default  new GraphQLObjectType({
     primerName: {
       type: GraphQLString
     },
-    muzzleVelocity: {
-      type: GraphQLInt
+    primerLot: {
+      type: GraphQLString
+    },
+    roundOAL: {
+      type: GraphQLFloat
     }
   })
 });

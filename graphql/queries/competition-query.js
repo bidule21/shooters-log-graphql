@@ -12,11 +12,7 @@ import {
   GraphQLList
 } from 'graphql';
 
-
-
-// const getCompetition = {
-  const competitionQueries = {
-
+const competitionQueries = {
   getCompetition: {
     type: competitionType,
     args: {
@@ -24,35 +20,27 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: (prevValue, args, {}) => {
-      console.log('entered getCompetition');
-        return new Promise((resolve, reject) => {
-          console.log('value of args.id: ', args._id);
-          competitionModel.findOne({'_id': args._id})
-            .then(competition => {
-              console.log('results of find in competition-query.js:  ', competition);
-              resolve(competition);
-            })
-            .catch(err => reject(httpErrors(404, err.message)));
-        });
-    },
-    }, 
+    resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
+      const competition = await competitionModel.findOne({'_id': args._id, userId: user.userId});
+      return competition;
+    }
+  },
 
   getAllCompetitions: {
     type: new GraphQLList(competitionType),
-    resolve: (prevValue, _ , {}) => {
+    resolve: async (prevValue, _ , {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       console.log('entered getAllCompetitions');
-      return new Promise((resolve, reject) => {
-        competitionModel.find()
-        .then(competitions => {
-          console.log('results in getAllCompetions: ', competitions)
-          resolve(competitions);
-        })
-        .catch(err => reject(httpErrors(404, err.message)));
-      });
+      const allCompetitions = await competitionModel.find({userId: user.userId});
+      return allCompetitions;
     }
   }
-  };
+}
 
 export {
   competitionQueries,

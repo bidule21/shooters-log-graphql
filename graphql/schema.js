@@ -19,6 +19,8 @@ import {barrelQueries} from './queries/barrel-query';
 import {barrelMutations} from './mutations/barrel-mutation';
 import {loadQueries} from './queries/load-query';
 import {loadMutations} from './mutations/load-mutation';
+import {signUpMutations} from './mutations/sign-up-mutation';
+import {signInMutations} from './mutations/sign-in-mutation';
 
 
 export default new GraphQLSchema({
@@ -42,6 +44,8 @@ export default new GraphQLSchema({
       ...rifleMutations,
       ...barrelMutations,
       ...loadMutations,
+      ...signUpMutations,
+      ...signInMutations,
     })
   })
 });
