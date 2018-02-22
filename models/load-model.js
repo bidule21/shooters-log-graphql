@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 
 const loadSchema = mongoose.Schema({
+  userId:             {type: mongoose.Schema.ObjectId},
   loadName:           {type: String},
   brassBrand:         {type: String},
   brassCaliber:       {type: Number},

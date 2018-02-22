@@ -20,7 +20,6 @@ import {
     },
     resolve: async (prevValue, args, {user}) => {
       console.log('entered getRifle');
-      console.log('value of args.id: ', args.rifleName);
       const rifle = await rifleModel.findOne({'rifleName': args.rifleName, userId: user.userId});
       return rifle;
     },
