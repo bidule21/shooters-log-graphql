@@ -9,9 +9,11 @@ export default new GraphQLObjectType({
     userId: {
       type: GraphQLID
     },
-    //you may have to include a match object with specific _id field to make //this work
     matchId: {
       type: GraphQLID
+    },
+    barrelName: {
+      type: GraphQLString
     },
     isXValue: {
       type: GraphQLBoolean

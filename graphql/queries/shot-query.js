@@ -23,18 +23,12 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: (prevValue, args, {}) => {
+    resolve: async (prevValue, args, {user}) => {
       console.log('entered getShot');
-        return new Promise((resolve, reject) => {
-          console.log('value of args.id: ', args._id);
-          shotModel.findOne({'_id': args._id})
-            .then(shot => {
-              console.log('results of find in shot-query.js:  ', shot);
-              resolve(shot);
-            })
-            .catch(err => reject(httpErrors(404, err.message)));
-        });
-    },
+      console.log('value of args.id: ', args._id);
+      const shot = await shotModel.findOne({'_id': args._id, userId: user.userId});
+      return shot;
+      }
     }, 
 
   getMatchShots: {
@@ -44,19 +38,29 @@ import {
         type: new GraphQLNonNull(GraphQLID)
       }
     },
-    resolve: (prevValue, args , {}) => {
+    resolve: async (prevValue, args , {user}) => {
       console.log('entered getMatchShots');
-      return new Promise((resolve, reject) => {
-        shotModel.find({'matchId': args.matchId})
-        .then(matchShots => {
-          console.log('results in getAllMatchShots: ', matchShots)
-          resolve(matchShots);
-        })
-        .catch(err => reject(httpErrors(404, err.message)));
-      });
+      const shots = await shotModel.find({'matchId': args.matchId, userId: user.userId});
+      return shots;
+      }
+    },
+ 
+
+  getBarrelShots: {
+    type: new GraphQLList(shotType),
+    args: {
+      barrelName: {
+        type: GraphQLString
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      const shots = await shotModel.find({barrelName: args.barrelName, userId: user.userId});
+      return shots;
     }
   }
-  };
+
+};
+
 
 export {
   shotQueries,

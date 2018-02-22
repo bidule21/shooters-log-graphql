@@ -3,6 +3,7 @@ import matchModel from '../../models/match-model';
 import matchType from '../types/match-type';
 import shotType from '../types/shot-type';
 import shotModel from '../../models/shot-model';
+import barrelModel from '../../models/barrel-model';
 import httpErrors from 'http-errors';
 
 
@@ -22,6 +23,9 @@ const shotMutations = {
     args: {
       matchId: {
         type: new GraphQLNonNull(GraphQLID)
+      },
+      barrelName: {
+        type: GraphQLString
       },
       isXValue: {
         type: new GraphQLNonNull(GraphQLBoolean)
@@ -56,9 +60,12 @@ const shotMutations = {
     console.log('prevValue passed to createShot: ', prevValue);
     console.log('value of user in createShot: ', user);
     console.log('values of args in createShot: ', args);
-    const shot = shotModel.create({
+    const barrel = await barrelModel.findOne({barrelName: args.barrelName, userId: user.userId});
+    const shot = await shotModel.create({
       userId: user.userId,
       matchId: args.matchId, 
+      barrelName: barrel.barrelName,
+      barrelId: barrel._id,
       isXValue: args.isXValue,
       score: args.score,
       shotNumber: args.shotNumber,
@@ -69,7 +76,7 @@ const shotMutations = {
       sighter: args.sighter,
       record: args.record
     });
-    console.log()
+    console.log('shot: ', shot);
     return shot;
     }
   }
