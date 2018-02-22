@@ -4,7 +4,8 @@ import {
   GraphQLID, 
   GraphQLNonNull, 
   GraphQLInt,
-  GraphQLList} from 'graphql';
+  GraphQLList,
+  GraphQLFloat} from 'graphql';
 import competitionType from './competition-type';
 import httpErrors from 'http-errors';
 import ShotType from './shot-type';
@@ -30,13 +31,13 @@ export default  new GraphQLObjectType({
       type: new GraphQLNonNull(GraphQLInt)
     },
     relay: {
-      type: new GraphQLNonNull(GraphQLInt)
+      type: GraphQLInt
     },
     startTime: {
       type: GraphQLString
     },
     temperature: {
-      type: GraphQLInt
+      type: GraphQLFloat
     },
     windClockDirection: {
       type: GraphQLInt

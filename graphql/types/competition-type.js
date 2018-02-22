@@ -22,6 +22,9 @@ export default  new GraphQLObjectType({
     location: {
       type: new GraphQLNonNull(GraphQLString)
     },
+    rifleName: {
+      type: GraphQLString
+    },
     action: {
       type: new GraphQLNonNull(GraphQLString)
     },

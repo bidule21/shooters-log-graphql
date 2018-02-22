@@ -15,6 +15,9 @@ export default  new GraphQLObjectType({
     _id: {
       type: new GraphQLNonNull(GraphQLID),
     },
+    rifleName: {
+      type: GraphQLString
+    },
     rifleBrand: {
       type: GraphQLString
     },
@@ -25,6 +28,9 @@ export default  new GraphQLObjectType({
       type: GraphQLString
     },
     rifleCategory: {
+      type: GraphQLString
+    },
+    barrelName: {
       type: GraphQLString
     }
   }),
