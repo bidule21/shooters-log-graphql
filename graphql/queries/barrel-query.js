@@ -15,39 +15,30 @@ import {
   getBarrel: {
     type: barrelType,
     args: {
-      _id: {
-        type: new GraphQLNonNull(GraphQLID)
+      barrelName: {
+        type: GraphQLString
       }
     },
-    resolve: (prevValue, args, {}) => {
-      console.log('entered getBarrel');
-        return new Promise((resolve, reject) => {
-          console.log('value of args.id: ', args._id);
-          barrelModel.findOne({'_id': args._id})
-            .then(load => {
-              console.log('results of find in barrel-query.js:  ', load);
-              resolve(load);
-            })
-            .catch(err => reject(httpErrors(404, err.message)));
-        });
-    },
+    resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
+      const barrel = await barrelModel.findOne({'barrelName': args.barrelName, userId: user.userId});
+      return barrel;
+      },
     }, 
 
   getAllBarrels: {
     type: new GraphQLList(barrelType),
-    resolve: (prevValue, _ , {}) => {
-      console.log('entered getAllBarrels');
-      return new Promise((resolve, reject) => {
-        barrelModel.find()
-        .then(barrels => {
-          console.log('results in getAllBarrels: ', barrels)
-          resolve(barrels);
-        })
-        .catch(err => reject(httpErrors(404, err.message)));
-      });
+    resolve: async (prevValue, _ , {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
+      const barrels = await barrelModel.find({userId: user.userId});
+      return barrels;
     }
   }
-  };
+};
 
 export {
   barrelQueries,

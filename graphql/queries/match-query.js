@@ -23,6 +23,9 @@ import {
       }
     },
     resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       const match= await matchModel.findOne({'_id': args._id, userId: user.userId});
       return match;
     }
@@ -36,6 +39,9 @@ import {
       }
     },
     resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       const matches = await matchModel.find({'competitionId': args.competitionId, userId: user.userId});
       return matches;
     }
@@ -44,6 +50,9 @@ import {
   getAllMatches: {
     type: new GraphQLList(matchType),
     resolve: async (prevValue, _ , {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
     console.log('entered getAllMatchs');
     const matches = await matchModel.find({userId: user.userId} );
     return matches;
