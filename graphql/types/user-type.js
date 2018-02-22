@@ -38,44 +38,26 @@ export default  new GraphQLObjectType({
     nameSuffix: {
       type: GraphQLString
     },
-    competitions: {
-      type: new GraphQLList(competitionType),
-      resolve: (user) => {
-        return new Promise((resolve, reject)=> {
-          competitionModel.find({'userId': user._id})
-          then(competitions => {
-            console.log('results in user-type competitions resolver: \n', competitions);
-            resolve(competitions);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
-      }
-    },
-    rifles: {
-      type: new GraphQLList(rifleType),
-      resolve: (user) => {
-        return new Promise((resolve, reject) => {
-          rifleModel.find({'userId': user._id})
-          .then(rifles => {
-            console.log('results in shots resolver: \n', rifles);
-            resolve(rifles);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
-      }
-    },
-    loads: {
-      type: new GraphQLList(loadType),
-      resolve: (user) => {
-        return new Promise((resolve, reject) => {
-          loadModel.find({'userId': user._id})
-          .then(loads => {
-            console.log('results in shots resolver: \n', loads);
-            resolve(loads);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
-      }
-    },
+    // competitions: {
+    //   type: new GraphQLList(competitionType),
+    //   resolve: async (user) => {
+    //     const competitions = await competitionModel.find({'userId': user._id})
+    //     return competitions;
+    //     }
+    // },
+    // rifles: {
+    //   type: new GraphQLList(rifleType),
+    //   resolve: async (user) => {
+    //       const rifles = await rifleModel.find({'userId': user._id});
+    //       return rifles;
+    //   }
+    // },
+    // loads: {
+    //   type: new GraphQLList(loadType),
+    //   resolve: async (user) => {
+    //   const loads = await loadModel.find({'userId': user._id})
+    //   return loads
+    //   }
+    // },
   }),
 });
