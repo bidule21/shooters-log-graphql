@@ -21,8 +21,9 @@ import {
       }
     },
     resolve: async (prevValue, args, {user}) => {
-      console.log('entered getLoad');
-      console.log('value of args.id: ', args._id);
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       const load = await loadModel.findOne({'loadName': args.loadName, userId: user.userId});
       console.log('load: ', load);
       return load;
@@ -32,6 +33,9 @@ import {
   getAllLoads: {
     type: new GraphQLList(loadType),
     resolve: async (prevValue, _ , {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       console.log('entered getAllLoads')
       const loads = await loadModel.find({userId: user.userId});
       console.log('loads: ', loads);

@@ -24,8 +24,9 @@ import {
       }
     },
     resolve: async (prevValue, args, {user}) => {
-      console.log('entered getShot');
-      console.log('value of args.id: ', args._id);
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       const shot = await shotModel.findOne({'_id': args._id, userId: user.userId});
       return shot;
       }
@@ -39,6 +40,9 @@ import {
       }
     },
     resolve: async (prevValue, args , {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       console.log('entered getMatchShots');
       const shots = await shotModel.find({'matchId': args.matchId, userId: user.userId});
       return shots;
@@ -54,6 +58,9 @@ import {
       }
     },
     resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('invalid user was provided');
+      }
       const shots = await shotModel.find({barrelName: args.barrelName, userId: user.userId});
       return shots;
     }

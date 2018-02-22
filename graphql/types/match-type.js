@@ -56,16 +56,10 @@ export default  new GraphQLObjectType({
     },
     shots: {
       type: new GraphQLList(ShotType),
-      resolve: (MatchType) => {
-        return new Promise((resolve, reject) => {
-          shotModel.find({'matchId': MatchType._id})
-          .then(shots => {
-            console.log('results in shots resolver: \n', shots);
-            resolve(shots);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
+      resolve: async (MatchType, _, {user}) => {
+      const shots = await shotModel.find({'matchId': MatchType._id, userId: user.userId});
+      return shots;
       }
-    }
-  }),
+    },
+  })
 });
