@@ -21,6 +21,9 @@ const competitionQueries = {
       }
     },
     resolve: async (prevValue, args, {user}) => {
+      if(!user){
+        throw Error('access is denied because an invalid user was provided');
+      }
       console.log('user: ', user);
       console.log('entered getCompetition');
       console.log('value of args.id: ', args._id);
@@ -32,6 +35,9 @@ const competitionQueries = {
   getAllCompetitions: {
     type: new GraphQLList(competitionType),
     resolve: async (prevValue, _ , {user}) => {
+      if(!user){
+        throw Error('access is denied because an invalid user was provided');
+      }
       console.log('entered getAllCompetitions');
       const allCompetitions = await competitionModel.find({userId: user.userId});
       return allCompetitions;
