@@ -67,6 +67,51 @@ const barrelMutations = {
       console.log('returned barrel in createBarrel:\n ', barrel);
       return barrel;
     }
+  },
+  updateBarrel: {
+    type: barrelType,
+    args: {
+      _id: {
+        type: GraphQLID
+      },
+      barrelName: {
+        type: GraphQLString
+      },
+      rifleName: {
+        type: GraphQLString
+      },
+      barrelBrand: {
+        type: GraphQLString
+      },
+      barrelType: {
+        type: GraphQLString
+      },
+      barrelTwist: {
+        type: GraphQLString
+      },
+      barrelLength: {
+        type: GraphQLInt
+      },
+      barrelChambered: {
+        type: GraphQLInt
+      },
+      barrelLife: {
+        type: GraphQLInt
+      },
+      currentRoundCount: {
+        type: GraphQLInt
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered resolve for updateBarrel');
+      console.log('values of args in updateBarrel: ', args);
+      console.log('value of userId: ', user.userId);
+      const rifle =  await rifleModel.findOne({userId: user.userId, rifleName: args.rifleName });
+      console.log('rifle returned in updateBarrel: ', rifle);
+      const barrel = await barrelModel.findByIdAndUpdate(args._id, args, {new:true});
+      console.log('returned barrel in createBarrel:\n ', barrel);
+      return barrel;
+    }
   }
 };
 
