@@ -158,6 +158,26 @@ const loadMutations = {
       console.log('returned load in updateLoad: ', load);
       return load;
     }
+  },
+  deleteLoad: {
+    type: loadType,
+    args: {
+      _id: {
+        type: GraphQLID
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered resolve for deleteload');
+      let load = await loadModel.findOne({_id: args._id, userId: user.userId});
+      console.log('load.userId: ', load.userId);
+      console.log('user.userId: ', user.userId);
+      if(user.userId != load.userId){
+        throw new Error('cannot delete load, due to invalid user id');
+      }
+      load = await loadModel.findByIdAndRemove(args._id);
+      console.log('returned load in deleteLoad: ', load);
+      return load;
+    }
   }
 };
 

@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 
 const barrelSchema = mongoose.Schema({
-  userId:             {type: mongoose.Schema.ObjectId},
+  userId:             {type: mongoose.Schema.ObjectId, required: true},
   barrelName:         {type: String},
   barrelBrand:        {type: String},
   barrelType:         {type: String},

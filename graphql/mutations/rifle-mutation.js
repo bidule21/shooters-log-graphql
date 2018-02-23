@@ -89,6 +89,24 @@ const rifleMutations = {
       console.log('newly updated rifle: ', rifle);
       return rifle;
     }
+  },
+  deleteRifle: {
+    type: rifleType,
+    args: {
+      _id: {
+        type: GraphQLID
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered resolve for deleteRifle');
+      let rifle = await rifleModel.findOne({_id: args._id, userId: user.userId});
+      if(user.userId != rifle.userId){
+        throw new Error('cannot delete rifle, due to invalid user id');
+      }
+      rifle = await rifleModel.findByIdAndRemove(args._id);
+      console.log('newly deleted rifle: ', rifle);
+      return rifle;
+    }
   }
 };
 

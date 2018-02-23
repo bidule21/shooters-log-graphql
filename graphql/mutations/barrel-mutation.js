@@ -100,6 +100,26 @@ const barrelMutations = {
       console.log('returned barrel in createBarrel:\n ', barrel);
       return barrel;
     }
+  },
+  deleteBarrel: {
+    type: barrelType,
+    args: {
+      _id: {
+        type: GraphQLID
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered resolve for updateBarrel');
+      let barrel = await barrelModel.findOne({_id: args._id, userId: user.userId});
+      if(user.userId != barrel.userId){
+        throw new Error('cannot delete barrel, due to invalid user id');
+      }
+      barrel = await barrelModel.findByIdAndRemove(args._id);
+      console.log('returned barrel in removeBarrel:\n ', barrel);
+      return barrel;
+    
+
+    }
   }
 };
 

@@ -121,6 +121,25 @@ const matchMutations = {
       console.log('match in updateMatch: ', match);
       return match;
     }
+  },
+  deleteMatch: {
+    type: matchType,
+    args: {
+      _id: {
+        type: GraphQLID
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered resolve for deleteMatch');
+      let match = await matchModel.findOne({_id: args._id, userId: user.userId});
+      if(user.userId != match.userId){
+        throw new Error('cannot remove match due to invalid user id');
+      }
+      console.log('values of args in deleteMatch: ', args);
+      match = await matchModel.findByIdAndRemove(args._id);
+      console.log('match in deleteMatch: ', match);
+      return match;
+    }
   }
 };
 
