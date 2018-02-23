@@ -130,8 +130,27 @@ const shotMutations = {
     args.barrelId = barrel._id;
     const shot = await shotModel.findByIdAndUpdate(args._id, args, {new:true});
     return shot;
+    }   
+},
+
+deleteShot: {
+  type: shotType,
+  args: {
+    _id: {
+      type: GraphQLID
     }
+  },
+  resolve: async (prevValue, args, {user}) => {
+  console.log('entered resolve for deleteShot');
+  let shot = await shotModel.findOne({_id: args._id, userId: user.userId});
+  if(user.userId != shot.userId){
+    throw new Error('cannot delete shot, due to invalid user id');
+  } 
+  shot = await shotModel.findByIdAndRemove(args._id);
+  return shot;
   }
+}
+
 };
 
 export {

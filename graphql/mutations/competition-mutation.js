@@ -83,8 +83,26 @@ const competitionMutations = {
       args.action = rifle.action;
       const competition = await competitionModel.findByIdAndUpdate(args._id, args, {new:true});
       }
+    },
+  deleteCompetition: {
+    type: competitionType,
+    args: {
+      _id: {
+        type: GraphQLID
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      let competition = await competitionModel.findOne({_id: args._id, userId: user.userId});
+      if(user.userId != competition.userId){
+        throw new Error('cannot delete competition, due to invalid user id');
+      }
+      console.log('entered deleteCompetition');
+      competition = await competitionModel.findByIdAndRemove(args._id);
+      console.log('deleted competition: ', competition);
+      return competition;
     }
   }
+};
 
 export {
   competitionMutations,
