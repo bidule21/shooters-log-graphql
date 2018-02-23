@@ -18,9 +18,6 @@ export default  new GraphQLObjectType({
     barrelName: {
       type: GraphQLString
     },
-    rifleName: {
-      type: GraphQLString
-    },
     barrelBrand: {
       type: GraphQLString
     },

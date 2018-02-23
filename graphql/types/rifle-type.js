@@ -1,3 +1,6 @@
+import barrelType from './barrel-type';
+import barrelModel from '../../models/barrel-model';
+
 
 import {
   GraphQLObjectType, 
@@ -32,6 +35,13 @@ export default  new GraphQLObjectType({
     },
     barrelName: {
       type: GraphQLString
+    },
+    barrel: {
+      type: barrelType,
+      resolve: async (rifleType, _ , {user}) => {
+        const barrel = await barrelModel.findOne({userId: user.userId, barrelName: rifleType.barrelName});
+        return barrel;
+      }
     }
   }),
 });

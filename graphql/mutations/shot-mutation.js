@@ -13,9 +13,10 @@ import {
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLBoolean,
+  GraphQLFloat
 } from 'graphql';
-import { GraphQLBoolean, GraphQLFloat } from 'graphql/type/scalars';
 
 const shotMutations = {
   createShot: {
@@ -77,6 +78,57 @@ const shotMutations = {
       record: args.record
     });
     console.log('shot: ', shot);
+    return shot;
+    }
+  },
+  updateShot: {
+    type: shotType,
+    args: {
+      _id: {
+        type: GraphQLID
+      },
+      matchId: {
+        type: GraphQLID
+      },
+      barrelName: {
+        type: GraphQLString
+      },
+      isXValue: {
+        type: GraphQLBoolean
+
+      },
+      score: {
+        type: GraphQLString
+      },
+      shotNumber: {
+        type: GraphQLInt
+      },
+      dateOf: {
+        type: GraphQLString
+      },
+      elevation: {
+        type: GraphQLFloat
+      },
+      windage: {
+        type: GraphQLFloat
+      },
+      practice: {
+        type: GraphQLBoolean
+      },
+      sighter: {
+        type: GraphQLBoolean
+      },
+      record: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+    console.log('entered resolve for createShot');
+    const barrel = await barrelModel.findOne({barrelName: args.barrelName, userId: user.userId});
+    args.UserId = user.UserId;
+    args.barrelName = barrel.barrelName;
+    args.barrelId = barrel._id;
+    const shot = await shotModel.findByIdAndUpdate(args._id, args, {new:true});
     return shot;
     }
   }
