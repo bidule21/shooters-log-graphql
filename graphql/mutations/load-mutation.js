@@ -93,6 +93,71 @@ const loadMutations = {
       console.log('returned load in createLoad: ', load);
       return load;
     }
+  },
+  updateLoad: {
+    type: loadType,
+    args: {
+      _id: {
+        type: GraphQLID
+      },
+      loadName: {
+        type: GraphQLString
+      },
+      brassBrand: {
+        type: GraphQLString
+      },
+      brassCaliber: {
+        type: GraphQLInt
+      },
+      brassLot: {
+        type: GraphQLString
+      },
+      powderBrand: {
+        type: GraphQLString
+      },
+      powderName: {
+        type: GraphQLString
+      },
+      powderWeight: {
+        type: GraphQLFloat
+      },
+      powderLot: {
+        type: GraphQLString
+      },
+      bulletBrand: {
+        type: GraphQLString
+      },
+      bulletCaliber: {
+        type: GraphQLInt
+      },
+      bulletWeight: {
+        type: GraphQLFloat
+      },
+      bulletLot: {
+        type: GraphQLString
+      },
+      primerBrand: {
+        type: GraphQLString
+      },
+      primerName: {
+        type: GraphQLString
+      },
+      primerLot: {
+        type: GraphQLString
+      },
+      roundOAL: {
+        type: GraphQLFloat
+      },
+    },
+    resolve: async (prevValue, args, {user}) => {
+      args.userId = user.userId;
+      console.log('entered resolve for updateload');
+      console.log('value of user context in updateload: ', user);
+      console.log('values of args in updateLoad: ', args);
+      const load = await loadModel.findByIdAndUpdate(args._id, args, {new:true});
+      console.log('returned load in updateLoad: ', load);
+      return load;
+    }
   }
 };
 

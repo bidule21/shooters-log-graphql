@@ -6,7 +6,7 @@ import httpErrors from 'http-errors';
 
 import {
   GraphQLSchema,
-  GrpahQLObjectType,
+  GraphQLObjectType,
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
@@ -18,9 +18,6 @@ const barrelMutations = {
     type: barrelType,
     args: {
       barrelName: {
-        type: GraphQLString
-      },
-      rifleName: {
         type: GraphQLString
       },
       barrelBrand: {
@@ -49,13 +46,9 @@ const barrelMutations = {
       console.log('entered resolve for createBarrel');
       console.log('values of args in createBarrel: ', args);
       console.log('value of userId: ', user.userId);
-      const rifle =  await rifleModel.findOne({userId: user.userId, rifleName: args.rifleName });
-      console.log('rifle returned in createBarrel: ', rifle);
       const barrel = await barrelModel.create({
-        rifleId: rifle._id,
         userId: user.userId,
         barrelName: args.barrelName,
-        rifleName: args.rifleName, 
         barrelBrand: args.barrelBrand, 
         barrelType: args.barrelType, 
         barrelTwist: args.barrelTwist,
@@ -75,9 +68,6 @@ const barrelMutations = {
         type: GraphQLID
       },
       barrelName: {
-        type: GraphQLString
-      },
-      rifleName: {
         type: GraphQLString
       },
       barrelBrand: {
@@ -106,8 +96,6 @@ const barrelMutations = {
       console.log('entered resolve for updateBarrel');
       console.log('values of args in updateBarrel: ', args);
       console.log('value of userId: ', user.userId);
-      const rifle =  await rifleModel.findOne({userId: user.userId, rifleName: args.rifleName });
-      console.log('rifle returned in updateBarrel: ', rifle);
       const barrel = await barrelModel.findByIdAndUpdate(args._id, args, {new:true});
       console.log('returned barrel in createBarrel:\n ', barrel);
       return barrel;

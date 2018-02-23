@@ -72,6 +72,55 @@ const matchMutations = {
       console.log('match in createMatch: ', match);
       return match;
     }
+  },
+  updateMatch: {
+    type: matchType,
+    args: {
+      _id: {
+        type: GraphQLID
+      },
+      competitionId: {
+        type: GraphQLID
+      },
+      matchNumber: {
+        type: GraphQLInt
+      },
+      targetNumber: {
+        type: GraphQLInt
+      },
+      distanceToTarget: {
+        type: GraphQLInt
+      },
+      relay: {
+        type: GraphQLInt
+      },
+      startTime: {
+        type: GraphQLString
+      },
+      temperature: {
+        type: GraphQLFloat
+      },
+      windClockDirection: {
+        type: GraphQLInt
+      },
+      windSpeed: {
+        type: GraphQLInt
+      },
+      lightClockDirection: {
+        type: GraphQLInt
+      },
+      weather: {
+        type: GraphQLString
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      args.userId = user.userId;
+      console.log('entered resolve for updateMatch');
+      console.log('values of args in updateMatch: ', args);
+      const match = await matchModel.findByIdAndUpdate(args._id, args, {new:true});
+      console.log('match in updateMatch: ', match);
+      return match;
+    }
   }
 };
 

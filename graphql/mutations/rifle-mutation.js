@@ -6,7 +6,7 @@ import httpErrors from 'http-errors';
 
 import {
   GraphQLSchema,
-  GrpahQLObjectType,
+  GraphQLObjectType,
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
@@ -52,6 +52,41 @@ const rifleMutations = {
         userId: user.userId,
       });
       console.log('newly created rifle: ', rifle);
+      return rifle;
+    }
+  },
+  updateRifle: {
+    type: rifleType,
+    args: {
+      _id: {
+        type: GraphQLID
+      },
+      rifleName: {
+        type: GraphQLString
+      },
+      rifleBrand: {
+        type: GraphQLString
+      },
+      rifleModel: {
+        type: GraphQLString
+      },
+      rifleAction: {
+        type: GraphQLString
+      },
+      rifleCategory: {
+        type: GraphQLString
+      },
+      barrelName: {
+        type: GraphQLString
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered resolve for updateRifle');
+      const barrel = await barrelModel.findOne({userId: user.userId, barrelName: args.barrelName});
+      args.barrelId = barrel._id;
+      args.userId = user.userId;
+      const rifle = await rifleModel.findByIdAndUpdate(args._id, args, {new:true});
+      console.log('newly updated rifle: ', rifle);
       return rifle;
     }
   }
