@@ -8,7 +8,7 @@ import {
   GraphQLNonNull,
   GraphQLList} from 'graphql';
 
-import matchType from './match-type';
+import MatchType from './match-type';
 import {matchQueries} from '../queries/match-query'
 import matchModel from '../../models/match-model';
 import {getAllMatchesByCompetitionId}  from '../queries/match-query';
@@ -35,7 +35,7 @@ export default  new GraphQLObjectType({
       type: GraphQLString
     },
     matches: {
-      type: new GraphQLList(matchType),
+      type: new GraphQLList(MatchType),
       resolve:  async (CompetitionType, _, {user}) => {
           const matches = await matchModel.find({'competitionId': CompetitionType._id, userId: user.userId});
           return matches;

@@ -9,8 +9,8 @@ import {
 
 import {competitionQueries} from './queries/competition-query';
 import {competitionMutations} from './mutations/competition-mutation';
-import { matchMutations } from './mutations/match-mutation';
-import { matchQueries } from './queries/match-query';
+import {matchMutations} from './mutations/match-mutation';
+import {matchQueries} from './queries/match-query';
 import {shotQueries} from './queries/shot-query';
 import {shotMutations} from './mutations/shot-mutation';
 import {rifleQueries} from './queries/rifle-query';

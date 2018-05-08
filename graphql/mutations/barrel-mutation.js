@@ -1,5 +1,5 @@
 import barrelModel from '../../models/barrel-model';
-import barrelType from '../types/barrel-type';
+import BarrelType from '../types/barrel-type';
 import rifleModel from '../../models/rifle-model';
 import httpErrors from 'http-errors';
 
@@ -15,7 +15,7 @@ import {
 
 const barrelMutations = {
   createBarrel: {
-    type: barrelType,
+    type: BarrelType,
     args: {
       barrelName: {
         type: GraphQLString
@@ -23,7 +23,7 @@ const barrelMutations = {
       barrelBrand: {
         type: GraphQLString
       },
-      barrelType: {
+      BarrelType: {
         type: GraphQLString
       },
       barrelTwist: {
@@ -50,7 +50,7 @@ const barrelMutations = {
         userId: user.userId,
         barrelName: args.barrelName,
         barrelBrand: args.barrelBrand, 
-        barrelType: args.barrelType, 
+        BarrelType: args.BarrelType, 
         barrelTwist: args.barrelTwist,
         barrelLength: args.barrelLength,
         barrelChambered: args.barrelChambered,
@@ -62,7 +62,7 @@ const barrelMutations = {
     }
   },
   updateBarrel: {
-    type: barrelType,
+    type: BarrelType,
     args: {
       _id: {
         type: GraphQLID
@@ -73,7 +73,7 @@ const barrelMutations = {
       barrelBrand: {
         type: GraphQLString
       },
-      barrelType: {
+      BarrelType: {
         type: GraphQLString
       },
       barrelTwist: {
@@ -102,7 +102,7 @@ const barrelMutations = {
     }
   },
   deleteBarrel: {
-    type: barrelType,
+    type: BarrelType,
     args: {
       _id: {
         type: GraphQLID

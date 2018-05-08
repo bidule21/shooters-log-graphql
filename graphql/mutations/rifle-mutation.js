@@ -1,5 +1,5 @@
 import rifleModel from '../../models/rifle-model';
-import rifleType from '../types/rifle-type';
+import RifleType from '../types/rifle-type';
 import barrelModel from '../../models/barrel-model';
 import httpErrors from 'http-errors';
 
@@ -15,7 +15,7 @@ import {
 
 const rifleMutations = {
   createRifle: {
-    type: rifleType,
+    type: RifleType,
     args: {
       rifleName: {
         type: GraphQLString
@@ -56,7 +56,7 @@ const rifleMutations = {
     }
   },
   updateRifle: {
-    type: rifleType,
+    type: RifleType,
     args: {
       _id: {
         type: GraphQLID
@@ -91,7 +91,7 @@ const rifleMutations = {
     }
   },
   deleteRifle: {
-    type: rifleType,
+    type: RifleType,
     args: {
       _id: {
         type: GraphQLID

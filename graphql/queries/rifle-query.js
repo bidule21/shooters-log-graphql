@@ -1,4 +1,4 @@
-import rifleType from '../types/rifle-type';
+import RifleType from '../types/rifle-type';
 import rifleModel from '../../models/rifle-model';
 import httpErrors from 'http-errors';
 
@@ -12,7 +12,7 @@ import {
   const rifleQueries = {
 
   getRifle: {
-    type: rifleType,
+    type: RifleType,
     args: {
       rifleName: {
         type: GraphQLString
@@ -29,7 +29,7 @@ import {
     }, 
 
   getAllRifles: {
-    type: new GraphQLList(rifleType),
+    type: new GraphQLList(RifleType),
     resolve: async (prevValue, _ , {user}) => {
       if(!user){
         throw Error('invalid user was provided');

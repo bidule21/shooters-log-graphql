@@ -5,7 +5,7 @@ const barrelSchema = mongoose.Schema({
   userId:             {type: mongoose.Schema.ObjectId, required: true},
   barrelName:         {type: String},
   barrelBrand:        {type: String},
-  barrelType:         {type: String},
+  BarrelType:         {type: String},
   barrelTwist:        {type: String},
   barrelLength:       {type: Number},
   barrelChambered:    {type: Number},

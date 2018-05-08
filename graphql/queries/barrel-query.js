@@ -1,4 +1,4 @@
-import barrelType from '../types/barrel-type';
+import BarrelType from '../types/barrel-type';
 import barrelModel from '../../models/barrel-model';
 import shotModel from '../../models/shot-model';
 import httpErrors from 'http-errors';
@@ -14,7 +14,7 @@ import {
   const barrelQueries = {
 
   getBarrel: {
-    type: barrelType,
+    type: BarrelType,
     args: {
       barrelName: {
         type: GraphQLString
@@ -33,7 +33,7 @@ import {
 
   //dynamic round count not functioning
     getAllBarrels: {
-    type: new GraphQLList(barrelType),
+    type: new GraphQLList(BarrelType),
     resolve: async (prevValue, _ , {user}) => {
       if(!user){
         throw Error('invalid user was provided');

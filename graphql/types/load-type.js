@@ -8,7 +8,7 @@ import {
 
 
 export default  new GraphQLObjectType({
-  name: 'loadType',
+  name: 'LoadType',
   fields: () => ({
     _id: {
       type: new GraphQLNonNull(GraphQLID)

@@ -1,4 +1,4 @@
-import barrelType from './barrel-type';
+import BarrelType from './barrel-type';
 
 import {
   GraphQLObjectType, 
@@ -10,7 +10,7 @@ import {
 
 
 export default  new GraphQLObjectType({
-  name: 'barrelType',
+  name: 'BarrelType',
   fields: () => ({
     _id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -21,7 +21,7 @@ export default  new GraphQLObjectType({
     barrelBrand: {
       type: GraphQLString
     },
-    barrelType: {
+    BarrelType: {
       type: GraphQLString
     },
     barrelTwist: {
