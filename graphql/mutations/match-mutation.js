@@ -1,6 +1,6 @@
-import competitionType from '../types/competition-type';
+import CompetitionType from '../types/competition-type';
 import matchModel from '../../models/match-model';
-import matchType from '../types/match-type';
+import MatchType from '../types/match-type';
 import httpErrors from 'http-errors';
 
 
@@ -16,7 +16,7 @@ import {
 
 const matchMutations = {
   createMatch: {
-    type: matchType,
+    type: MatchType,
     args: {
       competitionId: {
         type: new GraphQLNonNull(GraphQLID)
@@ -74,7 +74,7 @@ const matchMutations = {
     }
   },
   updateMatch: {
-    type: matchType,
+    type: MatchType,
     args: {
       _id: {
         type: GraphQLID
@@ -123,7 +123,7 @@ const matchMutations = {
     }
   },
   deleteMatch: {
-    type: matchType,
+    type: MatchType,
     args: {
       _id: {
         type: GraphQLID

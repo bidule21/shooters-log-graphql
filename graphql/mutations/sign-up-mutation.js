@@ -1,9 +1,11 @@
 
 import userModel from '../../models/user-model';
-import userType from '../types/user-type';
+import UserType from '../types/user-type';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
+const SECRET = process.env.SECRET_KEY;
 
 import {
   GraphQLSchema,
@@ -16,7 +18,7 @@ import {
 
 const signUpMutations = {
   createUser: {
-    type: userType,
+    type: UserType,
     args: {
       userName: {
         type: new GraphQLNonNull(GraphQLString)
@@ -41,13 +43,15 @@ const signUpMutations = {
       }
     },
     resolve: async (prevValue, args, {}) => {
-      console.log('entered resolve for createUser');
+      const existingUser =  await userModel.findOne({userName: args.userName});
+        if(existingUser){
+          throw new Error('choose another username');
+        }
+  
       args.password = await bcrypt.hash(args.password, 12);
-      console.log('password: ', args.password);
       const findHash = await crypto.randomBytes(256).toString('hex');
-      console.log('findhash: ', findHash);
 
-      return userModel.create({
+      const user = await userModel.create({
           userName: args.userName, 
           password: args.password,
           findHash: findHash, 
@@ -57,6 +61,8 @@ const signUpMutations = {
           lastName: args.lastName, 
           nameSuffix: args.nameSuffix, 
         });
+
+        return user;
       }
     }
   }

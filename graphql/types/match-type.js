@@ -6,7 +6,7 @@ import {
   GraphQLInt,
   GraphQLList,
   GraphQLFloat} from 'graphql';
-import competitionType from './competition-type';
+import CompetitionType from './competition-type';
 import httpErrors from 'http-errors';
 import ShotType from './shot-type';
 import shotModel from '../../models/shot-model';
@@ -52,7 +52,7 @@ export default  new GraphQLObjectType({
       type: GraphQLString
     },
     competition: {
-      type: competitionType
+      type: CompetitionType
     },
     shots: {
       type: new GraphQLList(ShotType),

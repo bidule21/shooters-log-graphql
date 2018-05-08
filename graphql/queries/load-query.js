@@ -1,6 +1,6 @@
-import loadType from '../types/load-type';
+import LoadType from '../types/load-type';
 import loadModel from '../../models/load-model';
-import rifleType from '../types/rifle-type';
+import RifleType from '../types/rifle-type';
 import httpErrors from 'http-errors';
 
 import {
@@ -14,7 +14,7 @@ import {
   const loadQueries = {
 
   getLoad: {
-    type: loadType,
+    type: LoadType,
     args: {
       loadName: {
         type: GraphQLString
@@ -31,7 +31,7 @@ import {
     },
 
   getAllLoads: {
-    type: new GraphQLList(loadType),
+    type: new GraphQLList(LoadType),
     resolve: async (prevValue, _ , {user}) => {
       if(!user){
         throw Error('invalid user was provided');

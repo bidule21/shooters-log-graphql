@@ -1,4 +1,4 @@
-import barrelType from './barrel-type';
+import BarrelType from './barrel-type';
 import barrelModel from '../../models/barrel-model';
 
 
@@ -13,7 +13,7 @@ import {
 
 
 export default  new GraphQLObjectType({
-  name: 'rifleType',
+  name: 'RifleType',
   fields: () => ({
     _id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -37,9 +37,9 @@ export default  new GraphQLObjectType({
       type: GraphQLString
     },
     barrel: {
-      type: barrelType,
-      resolve: async (rifleType, _ , {user}) => {
-        const barrel = await barrelModel.findOne({userId: user.userId, barrelName: rifleType.barrelName});
+      type: BarrelType,
+      resolve: async (RifleType, _ , {user}) => {
+        const barrel = await barrelModel.findOne({userId: user.userId, barrelName: RifleType.barrelName});
         return barrel;
       }
     }

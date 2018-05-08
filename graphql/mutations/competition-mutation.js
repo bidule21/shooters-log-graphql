@@ -1,6 +1,6 @@
 import competitionModel from '../../models/competition-model';
 import rifleModel from '../../models/rifle-model';
-import competitionType from '../types/competition-type';
+import CompetitionType from '../types/competition-type';
 import httpErrors from 'http-errors';
 
 
@@ -15,7 +15,7 @@ import {
 
 const competitionMutations = {
   createCompetition: {
-    type: competitionType,
+    type: CompetitionType,
     args: {
       location: {
         type: new GraphQLNonNull(GraphQLString)
@@ -52,22 +52,22 @@ const competitionMutations = {
     }
   },
   updateCompetition: {
-    type: competitionType,
+    type: CompetitionType,
     args: {
       _id: {
         type: GraphQLID
       },
       location: {
-        type: new GraphQLNonNull(GraphQLString)
+        type: GraphQLString
       },
       rifleName: {
         type: GraphQLString
       },
       action: {
-        type: new GraphQLNonNull(GraphQLString)
+        type: GraphQLString
       },
       caliber: {
-        type: new GraphQLNonNull(GraphQLInt)
+        type: GraphQLInt
       },
       dateOf: {
         type: GraphQLString
@@ -85,10 +85,10 @@ const competitionMutations = {
       }
     },
   deleteCompetition: {
-    type: competitionType,
+    type: CompetitionType,
     args: {
       _id: {
-        type: GraphQLID
+        type: new GraphQLNonNull(GraphQLID)
       }
     },
     resolve: async (prevValue, args, {user}) => {

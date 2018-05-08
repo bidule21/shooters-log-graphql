@@ -1,7 +1,7 @@
-import competitionType from '../types/competition-type';
+import CompetitionType from '../types/competition-type';
 import matchModel from '../../models/match-model';
-import matchType from '../types/match-type';
-import shotType from '../types/shot-type';
+import MatchType from '../types/match-type';
+import ShotType from '../types/shot-type';
 import shotModel from '../../models/shot-model';
 import barrelModel from '../../models/barrel-model';
 import httpErrors from 'http-errors';
@@ -20,7 +20,7 @@ import {
 
 const shotMutations = {
   createShot: {
-    type: shotType,
+    type: ShotType,
     args: {
       matchId: {
         type: new GraphQLNonNull(GraphQLID)
@@ -82,7 +82,7 @@ const shotMutations = {
     }
   },
   updateShot: {
-    type: shotType,
+    type: ShotType,
     args: {
       _id: {
         type: GraphQLID
@@ -123,7 +123,7 @@ const shotMutations = {
       }
     },
     resolve: async (prevValue, args, {user}) => {
-    console.log('entered resolve for createShot');
+    console.log('entered resolve for updateShot');
     const barrel = await barrelModel.findOne({barrelName: args.barrelName, userId: user.userId});
     args.UserId = user.UserId;
     args.barrelName = barrel.barrelName;
@@ -134,7 +134,7 @@ const shotMutations = {
 },
 
 deleteShot: {
-  type: shotType,
+  type: ShotType,
   args: {
     _id: {
       type: GraphQLID

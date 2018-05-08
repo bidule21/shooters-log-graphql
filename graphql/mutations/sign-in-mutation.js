@@ -1,8 +1,8 @@
 
 import userModel from '../../models/user-model';
-import userType from '../types/user-type';
+import UserType from '../types/user-type';
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
+// import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
 
@@ -15,11 +15,12 @@ import {
   GraphQLInt
 } from 'graphql';
 
-//attribution: Ben Awad https://www.youtube.com/watch?v=eu2VJ9dtwiY
+//attribution: Ben Awad https://www.youtube.com/watch?v=eu2VJ9dtwiY   and
+//https://www.howtographql.com/graphql-js/6-authentication/
 
 const signInMutations = {
   signInUser: {
-    type: GraphQLString,
+    type: UserType,
     args: {
       userName: {
         type: new GraphQLNonNull(GraphQLString)
@@ -42,16 +43,10 @@ const signInMutations = {
         if(!passwordIsValid){
           throw new Error('Incorrect password');
         }
-        const token = await jwt.sign(
-          {userName: user.userName, userId: user._id},
-           secret,
-          {expiresIn: '180d'}
-        );
-        console.log('token:  ', token);
-        return token;
+        return user;
       }
     }
-  };
+  }
 
 export {
   signInMutations,

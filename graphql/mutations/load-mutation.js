@@ -1,5 +1,5 @@
 
-import loadType from '../types/load-type';
+import LoadType from '../types/load-type';
 import loadModel from '../../models/load-model';
 import httpErrors from 'http-errors';
 
@@ -16,7 +16,7 @@ import {
 
 const loadMutations = {
   createLoad: {
-    type: loadType,
+    type: LoadType,
     args: {
       loadName: {
         type: GraphQLString
@@ -95,7 +95,7 @@ const loadMutations = {
     }
   },
   updateLoad: {
-    type: loadType,
+    type: LoadType,
     args: {
       _id: {
         type: GraphQLID
@@ -160,7 +160,7 @@ const loadMutations = {
     }
   },
   deleteLoad: {
-    type: loadType,
+    type: LoadType,
     args: {
       _id: {
         type: GraphQLID
