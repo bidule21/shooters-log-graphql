@@ -1,5 +1,5 @@
-import matchType from '../types/match-type';
-import shotType from '../types/shot-type';
+import MatchType from '../types/match-type';
+import ShotType from '../types/shot-type';
 import shotModel from '../../models/shot-model';
 import httpErrors from 'http-errors';
 
@@ -17,7 +17,7 @@ import {
   const shotQueries = {
 
   getshot: {
-    type: shotType,
+    type: ShotType,
     args: {
       _id: {
         type: new GraphQLNonNull(GraphQLID)
@@ -33,7 +33,7 @@ import {
     }, 
 
   getMatchShots: {
-    type: new GraphQLList(shotType),
+    type: new GraphQLList(ShotType),
     args: {
       matchId: {
         type: new GraphQLNonNull(GraphQLID)
@@ -51,7 +51,7 @@ import {
  
 
   getBarrelShots: {
-    type: new GraphQLList(shotType),
+    type: new GraphQLList(ShotType),
     args: {
       barrelName: {
         type: GraphQLString

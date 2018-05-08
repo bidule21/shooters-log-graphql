@@ -1,3 +1,5 @@
+'use strict';
+
 import {
   GraphQLObjectType, 
   GraphQLString, 
@@ -5,17 +7,19 @@ import {
   GraphQLNonNull, 
   GraphQLInt,
   GraphQLList} from 'graphql';
-import competitionType from './competition-type';
+import CompetitionType from './competition-type';
 import httpErrors from 'http-errors';
 import ShotType from './shot-type';
 import shotModel from '../../models/shot-model';
 import shotQueries from '../queries/shot-query';
-import matchType from './match-type';
-import loadType from './load-type';
-import rifleType from './rifle-type';
+import MatchType from './match-type';
+import LoadType from './load-type';
+import RifleType from './rifle-type';
+import jwt from 'jsonwebtoken';
+const SECRET = process.env.SECRET_KEY;
 
 export default  new GraphQLObjectType({
-  name: 'userType',
+  name: 'UserType',
   fields: () => ({
     _id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -38,44 +42,38 @@ export default  new GraphQLObjectType({
     nameSuffix: {
       type: GraphQLString
     },
-    competitions: {
-      type: new GraphQLList(competitionType),
-      resolve: (user) => {
-        return new Promise((resolve, reject)=> {
-          competitionModel.find({'userId': user._id})
-          then(competitions => {
-            console.log('results in user-type competitions resolver: \n', competitions);
-            resolve(competitions);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
-      }
-    },
-    rifles: {
-      type: new GraphQLList(rifleType),
-      resolve: (user) => {
-        return new Promise((resolve, reject) => {
-          rifleModel.find({'userId': user._id})
-          .then(rifles => {
-            console.log('results in shots resolver: \n', rifles);
-            resolve(rifles);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
-      }
-    },
-    loads: {
-      type: new GraphQLList(loadType),
-      resolve: (user) => {
-        return new Promise((resolve, reject) => {
-          loadModel.find({'userId': user._id})
-          .then(loads => {
-            console.log('results in shots resolver: \n', loads);
-            resolve(loads);
-          })
-          .catch(err => reject(httpErrors(404, err.message)));
-        });
-      }
-    },
+    token: {
+      type: GraphQLString,
+      resolve: async (prevValue, {userName, _id}, {}) => {
+            const token = await jwt.sign(
+              {userName: userName, userId: _id},
+               SECRET,
+              {expiresIn: '180d'});
+            console.log('token in token:  ', token);
+            return token;
+          }
+    }
+
+    // competitions: {
+    //   type: new GraphQLList(CompetitionType),
+    //   resolve: async (user) => {
+    //     const competitions = await competitionModel.find({'userId': user._id})
+    //     return competitions;
+    //     }
+    // },
+    // rifles: {
+    //   type: new GraphQLList(RifleType),
+    //   resolve: async (user) => {
+    //       const rifles = await rifleModel.find({'userId': user._id});
+    //       return rifles;
+    //   }
+    // },
+    // loads: {
+    //   type: new GraphQLList(LoadType),
+    //   resolve: async (user) => {
+    //   const loads = await loadModel.find({'userId': user._id})
+    //   return loads
+    //   }
+    // },
   }),
 });

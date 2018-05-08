@@ -4,11 +4,17 @@
 ###dotenv###
 .env
 
+
+###docs###
+docs/
+
+
 ###Mongo###
 db 
 env.sh 
 coverage 
 html-report 
+
 
 ### Linux ###
 *~
@@ -24,6 +30,7 @@ html-report
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
 
 ### macOS ###
 *.DS_Store

@@ -1,12 +1,12 @@
 import competitionModel from '../../models/competition-model';
 import rifleModel from '../../models/rifle-model';
-import competitionType from '../types/competition-type';
+import CompetitionType from '../types/competition-type';
 import httpErrors from 'http-errors';
 
 
 import {
   GraphQLSchema,
-  GrpahQLObjectType,
+  GraphQLObjectType,
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
@@ -15,7 +15,7 @@ import {
 
 const competitionMutations = {
   createCompetition: {
-    type: competitionType,
+    type: CompetitionType,
     args: {
       location: {
         type: new GraphQLNonNull(GraphQLString)
@@ -48,6 +48,57 @@ const competitionMutations = {
         dateOf: args.dateOf
       });
       console.log('competition: ', competition);
+      return competition;
+    }
+  },
+  updateCompetition: {
+    type: CompetitionType,
+    args: {
+      _id: {
+        type: GraphQLID
+      },
+      location: {
+        type: GraphQLString
+      },
+      rifleName: {
+        type: GraphQLString
+      },
+      action: {
+        type: GraphQLString
+      },
+      caliber: {
+        type: GraphQLInt
+      },
+      dateOf: {
+        type: GraphQLString
+      },
+    },
+    resolve: async (prevValue, args, {user}) => {
+      console.log('entered updateCompetition');
+      console.log('value of updateCompetition args: ', args);
+      const rifle = await rifleModel.findOne({userId: user.userId, rifleName: args.rifleName});
+      console.log('rifle in competitionUpdate: ', rifle);
+      args.rifleId = rifle._id;
+      args.rifleName = rifle.rifleName;
+      args.action = rifle.action;
+      const competition = await competitionModel.findByIdAndUpdate(args._id, args, {new:true});
+      }
+    },
+  deleteCompetition: {
+    type: CompetitionType,
+    args: {
+      _id: {
+        type: new GraphQLNonNull(GraphQLID)
+      }
+    },
+    resolve: async (prevValue, args, {user}) => {
+      let competition = await competitionModel.findOne({_id: args._id, userId: user.userId});
+      if(user.userId != competition.userId){
+        throw new Error('cannot delete competition, due to invalid user id');
+      }
+      console.log('entered deleteCompetition');
+      competition = await competitionModel.findByIdAndRemove(args._id);
+      console.log('deleted competition: ', competition);
       return competition;
     }
   }

@@ -1,7 +1,7 @@
 import competitionModel from '../../models/competition-model';
-import competitionType from '../types/competition-type';
+import CompetitionType from '../types/competition-type';
 import matchModel from '../../models/match-model';
-import matchType from '../types/match-type';
+import MatchType from '../types/match-type';
 import httpErrors from 'http-errors';
 
 import {
@@ -16,7 +16,7 @@ import {
   const matchQueries = {
 
   getMatch: {
-    type: matchType,
+    type: MatchType,
     args: {
       _id: {
         type: new GraphQLNonNull(GraphQLID)
@@ -32,7 +32,7 @@ import {
     },
 
   getAllMatchesByCompetitionId: {
-    type: new GraphQLList(matchType),
+    type: new GraphQLList(MatchType),
     args: {
       competitionId: {
         type: new GraphQLNonNull(GraphQLID)
@@ -48,7 +48,7 @@ import {
   },
 
   getAllMatches: {
-    type: new GraphQLList(matchType),
+    type: new GraphQLList(MatchType),
     resolve: async (prevValue, _ , {user}) => {
       if(!user){
         throw Error('invalid user was provided');
